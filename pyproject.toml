@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "faster-whisper-cli"
+version = "0.1.1"
+description = ""
+authors = ["paddy41601 <49016918+paddy41601@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "faster_whisper_cli"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+faster-whisper = "*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+faster-whisper = "faster_whisper_cli.cli:main"
