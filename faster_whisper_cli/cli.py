@@ -52,7 +52,7 @@ def main():
                         default='\"\'“¿([{-', help='if word_timestamps is True, merge these punctuation symbols with the next word')
     parser.add_argument('--append_punctuations', type=str, default='\"\'.。,，!！?？:：”)]}、',
                         help='if word_timestamps is True, merge these punctuation symbols with the previous word')
-    parser.add_argument('--vad_filter', type=bool, default=True,
+    parser.add_argument('--vad_filter', type=bool, default=False,
                         help='Enable the voice activity detection (VAD) to filter out parts of the audio without speech. This step is using the Silero VAD model https://github.com/snakers4/silero-vad.')
 
     # WhisperModel params
