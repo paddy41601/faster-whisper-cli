@@ -1,4 +1,5 @@
 import argparse
+from datetime import timedelta
 import os
 from faster_whisper import WhisperModel
 
@@ -56,7 +57,7 @@ def main():
                         help='Enable the voice activity detection (VAD) to filter out parts of the audio without speech. This step is using the Silero VAD model https://github.com/snakers4/silero-vad.')
 
     # WhisperModel params
-    parser.add_argument('--model_size_or_path', type=str, default='base',
+    parser.add_argument('--model_size_or_path', type=str, default='medium',
                         help='Size of the model to use (tiny, tiny.en, base, base.en, small, small.en, medium, medium.en, large-v1, or large-v2) or a path to a converted model directory. When a size is configured, the converted model is downloaded from the Hugging Face Hub.')
     parser.add_argument('--device', type=str, default='auto',
                         help='Device to use for computation ("cpu", "cuda", "auto").')
@@ -126,11 +127,12 @@ def main():
     # Write subtitle to output file
     with open(args.output, "w", encoding="utf-8") as f:
         for i, segment in enumerate(segments):
-            f.write(str(i+1) + "\n")
-            f.write("{:.2f}".format(segment.start) + " --> " +
-                    "{:.2f}".format(segment.end) + "\n")
-            f.write(segment.text + "\n")
-            f.write("\n")
+            segmentId = i+1
+            startTime = str(0)+str(timedelta(seconds=int(segment.start)))+',000'
+            endTime = str(0)+str(timedelta(seconds=int(segment.end)))+',000'
+            text = segment.text
+            newSegment = f"{segmentId}\n{startTime} --> {endTime}\n{text[1:] if text[0] == ' ' else text}\n\n"
+            f.write(newSegment)
 
     print("Subtitle file saved to %s" % args.output)
 
